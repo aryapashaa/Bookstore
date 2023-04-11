@@ -53,6 +53,21 @@ namespace Bookstore_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tb_m_publishers",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_m_publishers", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tb_m_roles",
                 columns: table => new
                 {
@@ -98,6 +113,53 @@ namespace Bookstore_API.Migrations
                         principalTable: "tb_m_countries",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tb_m_books",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    isbn = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    release_year = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    synopsis = table.Column<string>(type: "text", nullable: false),
+                    page_number = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<decimal>(type: "numeric(19,0)", nullable: false),
+                    genre = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    picture_url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    publisher_id = table.Column<int>(type: "int", nullable: false),
+                    author_id = table.Column<int>(type: "int", nullable: false),
+                    language_id = table.Column<int>(type: "int", nullable: false),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_m_books", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_tb_m_books_tb_m_authors_author_id",
+                        column: x => x.author_id,
+                        principalTable: "tb_m_authors",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tb_m_books_tb_m_languages_language_id",
+                        column: x => x.language_id,
+                        principalTable: "tb_m_languages",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tb_m_books_tb_m_publishers_publisher_id",
+                        column: x => x.publisher_id,
+                        principalTable: "tb_m_publishers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tb_m_books_tb_tr_shoppingcarts_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "tb_tr_shoppingcarts",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -153,28 +215,6 @@ namespace Bookstore_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_m_publishers",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    address_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_m_publishers", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_tb_m_publishers_tb_m_addresses_address_id",
-                        column: x => x.address_id,
-                        principalTable: "tb_m_addresses",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tb_m_accounts",
                 columns: table => new
                 {
@@ -217,53 +257,6 @@ namespace Bookstore_API.Migrations
                         principalTable: "tb_tr_shoppingcarts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tb_m_books",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    isbn = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    release_year = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    synopsis = table.Column<string>(type: "text", nullable: false),
-                    page_number = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<decimal>(type: "numeric(19,0)", nullable: false),
-                    genre = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    picture_url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    publisher_id = table.Column<int>(type: "int", nullable: false),
-                    author_id = table.Column<int>(type: "int", nullable: false),
-                    language_id = table.Column<int>(type: "int", nullable: false),
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_m_books", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_tb_m_books_tb_m_authors_author_id",
-                        column: x => x.author_id,
-                        principalTable: "tb_m_authors",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_m_books_tb_m_languages_language_id",
-                        column: x => x.language_id,
-                        principalTable: "tb_m_languages",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_m_books_tb_m_publishers_publisher_id",
-                        column: x => x.publisher_id,
-                        principalTable: "tb_m_publishers",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_m_books_tb_tr_shoppingcarts_ShoppingCartId",
-                        column: x => x.ShoppingCartId,
-                        principalTable: "tb_tr_shoppingcarts",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -352,11 +345,6 @@ namespace Bookstore_API.Migrations
                 name: "IX_tb_m_profiles_ShoppingCartId",
                 table: "tb_m_profiles",
                 column: "ShoppingCartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_m_publishers_address_id",
-                table: "tb_m_publishers",
-                column: "address_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_tr_accountroles_account_id",

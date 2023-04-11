@@ -14,13 +14,8 @@ public class Publisher
     public string Phone { get; set; }
     [Column("url"), MaxLength(255)]
     public string? Url { get; set; }
-    [Required, Column("address_id")]
-    public int AddressId { get; set; }
 
     // Cardinality
-    [JsonIgnore]
-    [ForeignKey(nameof(AddressId))]
-    public Address? Address { get; set; }
     [JsonIgnore]
     public ICollection<Book>? Books { get; set; }
 }

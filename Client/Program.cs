@@ -15,8 +15,17 @@ builder.Services.AddSession(option =>
 });
 
 // Dependency Injection
+builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<AddressRepository>();
+builder.Services.AddScoped<AuthorRepository>();
+builder.Services.AddScoped<BookRepository>();
+builder.Services.AddScoped<CityRepository>();
+builder.Services.AddScoped<CountryRepository>();
 builder.Services.AddScoped<LanguageRepository>();
-//builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<PaymentRepository>();
+builder.Services.AddScoped<ProfileRepository>();
+builder.Services.AddScoped<PublisherRepository>();
+builder.Services.AddScoped<ShoppingCartRepository>();
 
 // Configure JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookstore_API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20230411063756_InitialCommit")]
+    [Migration("20230411083028_InitialCommit")]
     partial class InitialCommit
     {
         /// <inheritdoc />
@@ -369,10 +369,6 @@ namespace Bookstore_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int")
-                        .HasColumnName("address_id");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -391,8 +387,6 @@ namespace Bookstore_API.Migrations
                         .HasColumnName("url");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.ToTable("tb_m_publishers");
                 });
@@ -576,17 +570,6 @@ namespace Bookstore_API.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
-            modelBuilder.Entity("Bookstore_API.Models.Publisher", b =>
-                {
-                    b.HasOne("Bookstore_API.Models.Address", "Address")
-                        .WithMany("Publishers")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-                });
-
             modelBuilder.Entity("Bookstore_API.Models.Account", b =>
                 {
                     b.Navigation("AccountRoles");
@@ -595,8 +578,6 @@ namespace Bookstore_API.Migrations
             modelBuilder.Entity("Bookstore_API.Models.Address", b =>
                 {
                     b.Navigation("Profiles");
-
-                    b.Navigation("Publishers");
                 });
 
             modelBuilder.Entity("Bookstore_API.Models.Author", b =>

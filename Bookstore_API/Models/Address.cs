@@ -21,6 +21,4 @@ public class Address
     public City? City { get; set; }
     [JsonIgnore]
     public ICollection<Profile>? Profiles { get; set; }
-    [JsonIgnore]
-    public ICollection<Publisher>? Publishers { get; set; }
 }
