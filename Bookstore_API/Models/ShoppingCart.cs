@@ -10,8 +10,8 @@ public class ShoppingCart
     public int Id { get; set; }
     [Required, Column("quantity")]
     public int Quantity { get; set; }
-    [Required, Column("user_id")]
-    public int UserId { get; set; }
+    [Required, Column("profile_id")]
+    public int ProfileId { get; set; }
     [Required, Column("book_id")]
     public int BookId { get; set; }
 
@@ -19,9 +19,9 @@ public class ShoppingCart
     [JsonIgnore]
     public Payment? Payment { get; set; }
     [JsonIgnore]
-    [ForeignKey(nameof(UserId))]
-    public ICollection<Profile>? Users { get; set; }
+    //[ForeignKey(nameof(ProfileId))]
+    public ICollection<Profile>? Profiles { get; set; }
     [JsonIgnore]
-    [ForeignKey(nameof(BookId))]
+    //[ForeignKey(nameof(BookId))]
     public ICollection<Book>? Books { get; set; }
 }

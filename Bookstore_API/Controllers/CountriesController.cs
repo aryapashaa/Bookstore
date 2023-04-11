@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bookstore_API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Admin")]
+//[Authorize(Roles = "Admin")]
 public class CountriesController : BaseController<int, Country, CountryRepository>
 {
     public CountriesController(CountryRepository repository) : base(repository)

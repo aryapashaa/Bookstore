@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookstore_API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20230410075410_InitialCommit")]
+    [Migration("20230411063756_InitialCommit")]
     partial class InitialCommit
     {
         /// <inheritdoc />
@@ -133,9 +133,6 @@ namespace Bookstore_API.Migrations
                         .HasColumnType("int")
                         .HasColumnName("author_id");
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Genre")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -173,6 +170,9 @@ namespace Bookstore_API.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("release_year");
 
+                    b.Property<int?>("ShoppingCartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Synopsis")
                         .IsRequired()
                         .HasColumnType("text")
@@ -188,14 +188,14 @@ namespace Bookstore_API.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("BookId");
-
                     b.HasIndex("Isbn")
                         .IsUnique();
 
                     b.HasIndex("LanguageId");
 
                     b.HasIndex("PublisherId");
+
+                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("tb_m_books");
                 });
@@ -275,10 +275,6 @@ namespace Bookstore_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AdminId")
-                        .HasColumnType("int")
-                        .HasColumnName("admin_id");
-
                     b.Property<decimal?>("Amount")
                         .HasColumnType("numeric(19,0)")
                         .HasColumnName("amount");
@@ -287,8 +283,9 @@ namespace Bookstore_API.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("payment_date");
 
-                    b.Property<int?>("ProfileId")
-                        .HasColumnType("int");
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int")
+                        .HasColumnName("profile_id");
 
                     b.Property<int>("ShoppingCartId")
                         .HasColumnType("int")
@@ -348,7 +345,7 @@ namespace Bookstore_API.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("phone");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("ShoppingCartId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -358,7 +355,7 @@ namespace Bookstore_API.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("tb_m_profiles");
                 });
@@ -445,13 +442,13 @@ namespace Bookstore_API.Migrations
                         .HasColumnType("int")
                         .HasColumnName("book_id");
 
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int")
+                        .HasColumnName("profile_id");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasColumnName("quantity");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
@@ -507,10 +504,6 @@ namespace Bookstore_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bookstore_API.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany("Books")
-                        .HasForeignKey("BookId");
-
                     b.HasOne("Bookstore_API.Models.Language", "Language")
                         .WithMany("Books")
                         .HasForeignKey("LanguageId")
@@ -522,6 +515,10 @@ namespace Bookstore_API.Migrations
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Bookstore_API.Models.ShoppingCart", "ShoppingCart")
+                        .WithMany("Books")
+                        .HasForeignKey("ShoppingCartId");
 
                     b.Navigation("Author");
 
@@ -547,7 +544,9 @@ namespace Bookstore_API.Migrations
                 {
                     b.HasOne("Bookstore_API.Models.Profile", "Profile")
                         .WithMany("Payments")
-                        .HasForeignKey("ProfileId");
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Bookstore_API.Models.ShoppingCart", "ShoppingCart")
                         .WithOne("Payment")
@@ -569,8 +568,8 @@ namespace Bookstore_API.Migrations
                         .IsRequired();
 
                     b.HasOne("Bookstore_API.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany("Users")
-                        .HasForeignKey("UserId");
+                        .WithMany("Profiles")
+                        .HasForeignKey("ShoppingCartId");
 
                     b.Navigation("Address");
 
@@ -643,7 +642,7 @@ namespace Bookstore_API.Migrations
 
                     b.Navigation("Payment");
 
-                    b.Navigation("Users");
+                    b.Navigation("Profiles");
                 });
 #pragma warning restore 612, 618
         }

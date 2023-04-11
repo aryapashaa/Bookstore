@@ -13,8 +13,8 @@ public class Payment
     public int? Amount { get; set; }
     [Column("payment_date")]
     public DateTime? PaymentDate { get; set; } = DateTime.Now;
-    [Required, Column("admin_id")]
-    public int AdminId { get; set; }
+    [Required, Column("profile_id")]
+    public int ProfileId { get; set; }
     [Required, Column("shoppingcart_id")]
     public int ShoppingCartId { get; set; }
 
