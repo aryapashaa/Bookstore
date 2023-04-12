@@ -63,4 +63,10 @@ public class AccountController : BaseController<Account,AccountRepository,int>
         }
         return View();
     }
+
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction(nameof(Index), "Home");
+    }
 }
