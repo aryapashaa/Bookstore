@@ -163,8 +163,9 @@ namespace Bookstore_API.Migrations
                         .HasColumnType("int")
                         .HasColumnName("publisher_id");
 
-                    b.Property<DateTime>("ReleaseYear")
-                        .HasColumnType("datetime2")
+                    b.Property<string>("ReleaseYear")
+                        .IsRequired()
+                        .HasColumnType("nchar(4)")
                         .HasColumnName("release_year");
 
                     b.Property<int?>("ShoppingCartId")
@@ -373,7 +374,6 @@ namespace Bookstore_API.Migrations
                         .HasColumnName("name");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("phone");

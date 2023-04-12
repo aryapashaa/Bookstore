@@ -12,8 +12,8 @@ public class Book
     public string Isbn { get; set; }
     [Required, Column("title"), MaxLength(255)]
     public string Title { get; set; }
-    [Required, Column("release_year")]
-    public DateTime ReleaseYear { get; set; }
+    [Required, Column("release_year", TypeName = "nchar(4)")]
+    public string ReleaseYear { get; set; }
     [Required, Column("synopsis", TypeName ="text")]
     public string Synopsis { get; set; }
     [Required, Column("page_number")]

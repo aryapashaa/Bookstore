@@ -10,8 +10,8 @@ public class Publisher
     public int Id { get; set; }
     [Required, Column("name"), MaxLength(50)]
     public string Name { get; set; }
-    [Required, Column("phone"), MaxLength(20)]
-    public string Phone { get; set; }
+    [Column("phone"), MaxLength(20)]
+    public string? Phone { get; set; }
     [Column("url"), MaxLength(255)]
     public string? Url { get; set; }
 

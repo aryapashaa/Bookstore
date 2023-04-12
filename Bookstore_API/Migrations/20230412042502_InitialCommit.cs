@@ -59,7 +59,7 @@ namespace Bookstore_API.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
@@ -123,7 +123,7 @@ namespace Bookstore_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     isbn = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    release_year = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    release_year = table.Column<string>(type: "nchar(4)", nullable: false),
                     synopsis = table.Column<string>(type: "text", nullable: false),
                     page_number = table.Column<int>(type: "int", nullable: false),
                     price = table.Column<decimal>(type: "numeric(19,0)", nullable: false),
