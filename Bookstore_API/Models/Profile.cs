@@ -30,10 +30,6 @@ public class Profile
     public Address? Address { get; set; }
     [JsonIgnore]
     public Account? Account { get; set; }
-    [JsonIgnore]
-    public ShoppingCart? ShoppingCart { get; set; }
-    [JsonIgnore]
-    public ICollection<Payment>? Payments { get; set; }
 }
 public enum GenderEnum
 {

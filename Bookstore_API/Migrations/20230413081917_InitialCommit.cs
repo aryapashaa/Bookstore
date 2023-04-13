@@ -81,21 +81,6 @@ namespace Bookstore_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_tr_shoppingcarts",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    quantity = table.Column<int>(type: "int", nullable: false),
-                    profile_id = table.Column<int>(type: "int", nullable: false),
-                    book_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_tr_shoppingcarts", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tb_m_cities",
                 columns: table => new
                 {
@@ -128,11 +113,14 @@ namespace Bookstore_API.Migrations
                     page_number = table.Column<int>(type: "int", nullable: false),
                     price = table.Column<decimal>(type: "numeric(19,0)", nullable: false),
                     genre = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    picture_url = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    picture_url = table.Column<string>(type: "text", nullable: true),
+                    tokopedia_url = table.Column<string>(type: "text", nullable: true),
+                    shopee_url = table.Column<string>(type: "text", nullable: true),
+                    lazada_url = table.Column<string>(type: "text", nullable: true),
+                    rating = table.Column<decimal>(type: "decimal(2,1)", nullable: true),
                     publisher_id = table.Column<int>(type: "int", nullable: false),
                     author_id = table.Column<int>(type: "int", nullable: false),
-                    language_id = table.Column<int>(type: "int", nullable: false),
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: true)
+                    language_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,11 +143,6 @@ namespace Bookstore_API.Migrations
                         principalTable: "tb_m_publishers",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_m_books_tb_tr_shoppingcarts_ShoppingCartId",
-                        column: x => x.ShoppingCartId,
-                        principalTable: "tb_tr_shoppingcarts",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -195,8 +178,7 @@ namespace Bookstore_API.Migrations
                     birth_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     gender = table.Column<int>(type: "int", nullable: false),
                     phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    address_id = table.Column<int>(type: "int", nullable: false),
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: true)
+                    address_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,11 +189,6 @@ namespace Bookstore_API.Migrations
                         principalTable: "tb_m_addresses",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_m_profiles_tb_tr_shoppingcarts_ShoppingCartId",
-                        column: x => x.ShoppingCartId,
-                        principalTable: "tb_tr_shoppingcarts",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -229,34 +206,6 @@ namespace Bookstore_API.Migrations
                         column: x => x.id,
                         principalTable: "tb_m_profiles",
                         principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tb_tr_payments",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    amount = table.Column<decimal>(type: "numeric(19,0)", nullable: true),
-                    payment_date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    profile_id = table.Column<int>(type: "int", nullable: false),
-                    shoppingcart_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_tr_payments", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_tb_tr_payments_tb_m_profiles_profile_id",
-                        column: x => x.profile_id,
-                        principalTable: "tb_m_profiles",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_tr_payments_tb_tr_shoppingcarts_shoppingcart_id",
-                        column: x => x.shoppingcart_id,
-                        principalTable: "tb_tr_shoppingcarts",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -321,11 +270,6 @@ namespace Bookstore_API.Migrations
                 column: "publisher_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_books_ShoppingCartId",
-                table: "tb_m_books",
-                column: "ShoppingCartId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_tb_m_cities_country_id",
                 table: "tb_m_cities",
                 column: "country_id");
@@ -342,11 +286,6 @@ namespace Bookstore_API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_profiles_ShoppingCartId",
-                table: "tb_m_profiles",
-                column: "ShoppingCartId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_tb_tr_accountroles_account_id",
                 table: "tb_tr_accountroles",
                 column: "account_id");
@@ -355,17 +294,6 @@ namespace Bookstore_API.Migrations
                 name: "IX_tb_tr_accountroles_role_id",
                 table: "tb_tr_accountroles",
                 column: "role_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_tr_payments_profile_id",
-                table: "tb_tr_payments",
-                column: "profile_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_tr_payments_shoppingcart_id",
-                table: "tb_tr_payments",
-                column: "shoppingcart_id",
-                unique: true);
         }
 
         /// <inheritdoc />
@@ -376,9 +304,6 @@ namespace Bookstore_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_tr_accountroles");
-
-            migrationBuilder.DropTable(
-                name: "tb_tr_payments");
 
             migrationBuilder.DropTable(
                 name: "tb_m_authors");
@@ -400,9 +325,6 @@ namespace Bookstore_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_m_addresses");
-
-            migrationBuilder.DropTable(
-                name: "tb_tr_shoppingcarts");
 
             migrationBuilder.DropTable(
                 name: "tb_m_cities");

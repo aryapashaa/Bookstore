@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Client.Models;
 public class Book
@@ -14,7 +16,11 @@ public class Book
     public int Price { get; set; }
     public string Genre { get; set; }
     public string? PictureUrl { get; set; }
-    public int PublisherId { get; set; }
+	public string? TokopediaUrl { get; set; }
+	public string? ShopeeUrl { get; set; }
+	public string? LazadaUrl { get; set; }
+	public decimal? Rating { get; set; }
+	public int PublisherId { get; set; }
     public int AuthorId { get; set; }
     public int LanguageId { get; set; }
 }

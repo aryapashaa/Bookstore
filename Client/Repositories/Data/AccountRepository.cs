@@ -30,4 +30,16 @@ public class AccountRepository : GeneralRepository<Account, int>
         }
         return entityVM;
     }
+
+    public async Task<ResponseStatusVM> Register(RegisterVM entity)
+    {
+        ResponseStatusVM entityVM = null;
+        StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+        using (var response = _httpClient.PostAsync(request + "Register/", content).Result)
+        {
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            entityVM = JsonConvert.DeserializeObject<ResponseStatusVM>(apiResponse);
+        }
+        return entityVM;
+    }
 }

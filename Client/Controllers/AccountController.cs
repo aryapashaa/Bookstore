@@ -27,12 +27,12 @@ public class AccountController : BaseController<Account,AccountRepository,int>
 
     [HttpPost]
     //[ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(Account account)
+    public async Task<IActionResult> Register(RegisterVM registerVM)
     {
-        var result = await _accountrepository.Post(account);
+        var result = await _accountrepository.Register(registerVM);
         if (result.StatusCode == "200")
         {
-            RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
         return View();
     }

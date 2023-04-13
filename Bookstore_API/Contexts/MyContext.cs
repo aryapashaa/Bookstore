@@ -17,10 +17,8 @@ public class MyContext : DbContext
     public DbSet<City> Cities { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Language> Languages { get; set; }
-    public DbSet<Payment> Payments { get; set; }
     public DbSet<Publisher> Publishers { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     public DbSet<Profile> Profiles { get; set; }
 
     // Fluent API

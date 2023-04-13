@@ -22,9 +22,17 @@ public class Book
     public int Price { get; set; }
     [Required, Column("genre"), MaxLength(25)]
     public string Genre { get; set; }
-    [Column("picture_url"), MaxLength(255)]
+    [Column("picture_url", TypeName = "text")]
     public string? PictureUrl { get; set; }
-    [Required, Column("publisher_id")]
+	[Column("tokopedia_url", TypeName = "text")]
+	public string? TokopediaUrl { get; set; }
+	[Column("shopee_url", TypeName = "text")]
+	public string? ShopeeUrl { get; set; }
+	[Column("lazada_url", TypeName = "text")]
+	public string? LazadaUrl { get; set; }
+	[Column("rating", TypeName = "decimal(2,1)")]
+	public decimal? Rating { get; set; }
+	[Required, Column("publisher_id")]
     public int PublisherId { get; set; }
     [Required, Column("author_id")]
     public int AuthorId { get; set; }
@@ -32,8 +40,6 @@ public class Book
     public int LanguageId { get; set; }
 
     // Cardinality
-    [JsonIgnore]
-    public ShoppingCart? ShoppingCart { get; set; }
     [JsonIgnore]
     [ForeignKey(nameof(PublisherId))]
     public Publisher? Publisher { get; set; }

@@ -37,11 +37,9 @@ builder.Services.AddScoped<BookRepository>();
 builder.Services.AddScoped<CityRepository>();
 builder.Services.AddScoped<CountryRepository>();
 builder.Services.AddScoped<LanguageRepository>();
-builder.Services.AddScoped<PaymentRepository>();
 builder.Services.AddScoped<ProfileRepository>();
 builder.Services.AddScoped<PublisherRepository>();
 builder.Services.AddScoped<RoleRepository>();
-builder.Services.AddScoped<ShoppingCartRepository>();
 
 // Configure JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
